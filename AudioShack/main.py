@@ -60,7 +60,7 @@ class SongSchema(Schema):
 
     id = fields.Integer()
     title = fields.String()
-    mp3 = files.LargeBinary()
+    mp3 = fields.LargeBinary()
     album_art_id = fields.Url()
     genre_id = fields.String()
     artist_id = fields.String()
