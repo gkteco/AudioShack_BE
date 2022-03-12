@@ -24,7 +24,10 @@ make sure to install latest python
 server will be listening on http://localhost:5000
 
 [example endpoint]
+
 'http://localhost:5000/' = request to upload song
+
 'http://localhost:5000/data/songs' = get all songs
+
 'http://localhost:5000/song/<int:title>' = get one song
 
