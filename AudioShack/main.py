@@ -4,7 +4,7 @@ import os
 
 main = Flask(__name__)
 main.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
-
+main.config["UPLOAD_FOLDER"] = "static/"
 
 db = SQLAlchemy(main)
 
@@ -13,7 +13,8 @@ db = SQLAlchemy(main)
 class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String)
-    
+    mp3 = db.Column(db.LargeBinary)
+
     album_art_id = db.Column(db.String, db.ForeignKey('album_art.image'))
     album_art = db.relationship('Album_art', backref=db.backref('songs'))
 
@@ -34,7 +35,7 @@ class Song(db.Model):
 
 class Album_art(db.Model):
     art_name = db.Column(db.String, primary_key = True)
-    image = db.Column(db.String)
+    image = db.Column(db.LargeBinary)
 
 class Genre(db.Model):
     genre_name = db.Column(db.String, primary_key = True)
@@ -85,11 +86,18 @@ api.route(SongOne, 'song_one', '/song/<int:title>')
 
 
 from twilio.rest import Client
+from werkzeug.utils import secure_filename
 
-#main routes
-@main.route('/')
-def index():
+# API routes
+@main.route('/', methods=['GET', 'POST'])
+def upload():
+    if request.method == 'POST':
+        file = request.files['file']
+        filename = secure_filename(file.filename)
+        file.save(main.config['UPLOAD_FOLDER'] + filename)
+        return f'Uploaded: {file.filename}'
     return render_template('index.html')
+
 
 
 @main.route('/songs/add', methods=['POST'])
