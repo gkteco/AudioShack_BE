@@ -60,7 +60,6 @@ class SongSchema(Schema):
 
     id = fields.Integer()
     title = fields.String()
-    mp3 = fields.LargeBinary()
     album_art_id = fields.Url()
     genre_id = fields.String()
     artist_id = fields.String()
@@ -98,13 +97,6 @@ def upload():
         filename = secure_filename(file.filename)
         file.save(main.config['UPLOAD_FOLDER'] + filename)
         return f'Uploaded: {file.filename}'
-    title = request.form['title']
-    album_art_id = request.form['album_art_id']
-    genre_id = request.form['genre_id']
-    artist_id = request.form['artist_id']
-    song = Song(title, album_art_id, genre_id, artist_id)
-    db.session.add(song)
-    db.session.commit()
     return render_template('index.html')
 
 if __name__ == "__main__":
