@@ -29,6 +29,7 @@ class Song(db.Model):
 
     def __init__(self, title, album_art, genere, artist):
         self.title = title
+        self.mp3 = mp3
         self.album_art = album_art
         self.genre = genre
         self.artist = artist
@@ -59,6 +60,7 @@ class SongSchema(Schema):
 
     id = fields.Integer()
     title = fields.String()
+    mp3 = files.LargeBinary()
     album_art_id = fields.Url()
     genre_id = fields.String()
     artist_id = fields.String()
@@ -89,19 +91,13 @@ from twilio.rest import Client
 from werkzeug.utils import secure_filename
 
 # API routes
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/', methods=['GET','POST'])
 def upload():
     if request.method == 'POST':
         file = request.files['file']
         filename = secure_filename(file.filename)
         file.save(main.config['UPLOAD_FOLDER'] + filename)
         return f'Uploaded: {file.filename}'
-    return render_template('index.html')
-
-
-
-@main.route('/songs/add', methods=['POST'])
-def insert_data():
     title = request.form['title']
     album_art_id = request.form['album_art_id']
     genre_id = request.form['genre_id']
@@ -109,6 +105,7 @@ def insert_data():
     song = Song(title, album_art_id, genre_id, artist_id)
     db.session.add(song)
     db.session.commit()
+    return render_template('index.html')
 
 if __name__ == "__main__":
     main.run(debug=True)
