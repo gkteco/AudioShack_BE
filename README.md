@@ -12,4 +12,19 @@ Backend for AudioShack, a blockchain application that will help musicians manage
 
 [How To Use]
 
-git clode
+make sure to install latest python
+
+1) git clone git@github.com:giannicrivello/AudioShack_BE.git
+2) cd AudioShack_BE
+3) source env/bin/activate
+4) pip install -r requirements.txt
+5) cd AudioShack
+6) python3 main.py
+
+server will be listening on http://localhost:5000
+
+[example endpoint]
+'http://localhost:5000/' = request to upload song
+'http://localhost:5000/data/songs' = get all songs
+'http://localhost:5000/song/<int:title>' = get one song
+
