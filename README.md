@@ -10,3 +10,6 @@ Backend for AudioShack, a blockchain application that will help musicians manage
 
 '/song/<int:title>' = get one song
 
+[How To Use]
+
+git clode
