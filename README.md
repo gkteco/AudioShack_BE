@@ -3,7 +3,9 @@ Backend for AudioShack, a blockchain application that will help musicians manage
 
 
 [End Point Docs]
-'/' = request to upload song (title, mp3,  album_art, genre, artist) \n
-'/data/songs' = get all songs \n
+'/' = request to upload song (title, mp3,  album_art, genre, artist)
+
+'/data/songs' = get all songs 
+
 '/song/<int:title>' = get one song
 
